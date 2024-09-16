@@ -1,5 +1,5 @@
 import { Libro } from "../../libros/entities/libro.entity";
-import { Persona } from "../../persona/entities/persona.entity";
+import { Persona } from "./persona/entities/persona.entity";
 import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Autor {
