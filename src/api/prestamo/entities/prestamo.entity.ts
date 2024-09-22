@@ -1,6 +1,6 @@
-import { Lector } from "src/lector/entities/lector.entity";
-import { Libro } from "src/libros/entities/libro.entity";
-import { Usuario } from "src/usuario/entities/usuario.entity";
+import { Lector } from "../../lector/entities/lector.entity";
+import { Libro } from "../../libros/entities/libro.entity";
+import { Usuario } from "../../usuario/entities/usuario.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -8,7 +8,7 @@ export class Prestamo {
   @PrimaryGeneratedColumn()
   id: number;  // Clave primaria auto-incremental
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   fechaInicio: Date;  // Fecha de inicio del préstamo
 
   @Column({ type: 'datetime' })

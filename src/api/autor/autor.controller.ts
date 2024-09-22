@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { AutorService } from './autor.service';
 import { CreateAutorDto } from './dto/create-autor.dto';
 import { UpdateAutorDto } from './dto/update-autor.dto';
+import { RestriccionDiaGuard } from '../auth/guard/auth.guard';
+
 
 @Controller('autor')
 export class AutorController {
-  constructor(private readonly autorService: AutorService) {}
+  constructor(private readonly autorService: AutorService) { }
 
   @Post()
   create(@Body() createAutorDto: CreateAutorDto) {
@@ -13,8 +15,8 @@ export class AutorController {
   }
 
   @Get()
-  findAll() {
-    return this.autorService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.autorService.findAll(page, limit);
   }
 
   @Get(':id')

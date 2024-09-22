@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEditorialDto } from './dto/create-editorial.dto';
 import { UpdateEditorialDto } from './dto/update-editorial.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Editorial } from './entities/editorial.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class EditorialService {
+  constructor(
+    @InjectRepository(Editorial)
+    private repository: Repository<Editorial>,
+  ) {
+
+  }
   create(createEditorialDto: CreateEditorialDto) {
-    return 'This action adds a new editorial';
+    return this.repository.save(createEditorialDto);
   }
 
-  findAll() {
-    return `This action returns all editorial`;
+  findAll(page: number = 1, limit: number = 10): Promise<[Editorial[], number]> {
+    return this.repository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
-
   findOne(id: number) {
-    return `This action returns a #${id} editorial`;
+    return this.repository.findOne({ where: { id: id } });
   }
 
   update(id: number, updateEditorialDto: UpdateEditorialDto) {
-    return `This action updates a #${id} editorial`;
+    return this.repository.update(id, updateEditorialDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} editorial`;
+    return this.repository.delete(id);
   }
 }

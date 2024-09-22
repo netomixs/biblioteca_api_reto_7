@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { LectorService } from './lector.service';
 import { CreateLectorDto } from './dto/create-lector.dto';
 import { UpdateLectorDto } from './dto/update-lector.dto';
@@ -13,8 +13,8 @@ export class LectorController {
   }
 
   @Get()
-  findAll() {
-    return this.lectorService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.lectorService.findAll(page, limit);
   }
 
   @Get(':id')

@@ -1,7 +1,7 @@
-import { Autor } from 'src/autor/entities/autor.entity';
-import { Editorial } from 'src/editorial/entities/editorial.entity';
-import { Genero } from 'src/genero/entities/genero.entity';
-import { Prestamo } from 'src/prestamo/entities/prestamo.entity';
+import { Autor } from '../../autor/entities/autor.entity';
+import { Editorial } from '../../editorial/entities/editorial.entity';
+import { Genero } from '../../genero/entities/genero.entity';
+import { Prestamo } from '../../prestamo/entities/prestamo.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany, ManyToOne } from 'typeorm';
 @Entity()
 export class Libro {
@@ -39,7 +39,6 @@ export class Libro {
     @ManyToMany(() => Genero, (genero) => genero.libros)
     @JoinTable()
     generos: Genero[];
-
 
     @OneToMany(() => Prestamo, prestamo => prestamo.libro)
     prestamos: Prestamo[];

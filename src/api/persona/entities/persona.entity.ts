@@ -1,6 +1,6 @@
-import { Autor } from "src/autor/entities/autor.entity";
-import { Lector } from "src/lector/entities/lector.entity";
-import { Usuario } from "src/usuario/entities/usuario.entity";
+import { Autor } from "../../autor/entities/autor.entity";
+import { Lector } from "../../lector/entities/lector.entity";
+import { Usuario } from "../../usuario/entities/usuario.entity";
 import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Persona {

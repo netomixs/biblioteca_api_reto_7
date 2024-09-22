@@ -7,10 +7,7 @@ import { UpdateNivelUsuarioDto } from './dto/update-nivel-usuario.dto';
 export class NivelUsuarioController {
   constructor(private readonly nivelUsuarioService: NivelUsuarioService) {}
 
-  @Post()
-  create(@Body() createNivelUsuarioDto: CreateNivelUsuarioDto) {
-    return this.nivelUsuarioService.create(createNivelUsuarioDto);
-  }
+  
 
   @Get()
   findAll() {
@@ -26,9 +23,5 @@ export class NivelUsuarioController {
   update(@Param('id') id: string, @Body() updateNivelUsuarioDto: UpdateNivelUsuarioDto) {
     return this.nivelUsuarioService.update(+id, updateNivelUsuarioDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.nivelUsuarioService.remove(+id);
-  }
+ 
 }

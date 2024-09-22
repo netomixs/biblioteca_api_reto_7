@@ -1,4 +1,4 @@
-import { Libro } from "src/libros/entities/libro.entity";
+import { Libro } from "../../libros/entities/libro.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

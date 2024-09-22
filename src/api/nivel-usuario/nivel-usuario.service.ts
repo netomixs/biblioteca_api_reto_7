@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNivelUsuarioDto } from './dto/create-nivel-usuario.dto';
 import { UpdateNivelUsuarioDto } from './dto/update-nivel-usuario.dto';
+import { NivelUsuario } from './entities/nivel-usuario.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class NivelUsuarioService {
-  create(createNivelUsuarioDto: CreateNivelUsuarioDto) {
-    return 'This action adds a new nivelUsuario';
-  }
+  constructor(
+    @InjectRepository(NivelUsuario)
+    private repository: Repository<NivelUsuario>,
+  ) { }
 
-  findAll() {
-    return `This action returns all nivelUsuario`;
+  findAll(): Promise<NivelUsuario[]> {
+    return this.repository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} nivelUsuario`;
+    return this.repository.findOne({ where: { id } });;
   }
 
   update(id: number, updateNivelUsuarioDto: UpdateNivelUsuarioDto) {
-    return `This action updates a #${id} nivelUsuario`;
+    return this.repository.update(id, updateNivelUsuarioDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} nivelUsuario`;
-  }
+ 
 }

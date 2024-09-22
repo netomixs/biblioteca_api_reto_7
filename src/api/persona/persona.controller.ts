@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PersonaService } from './persona.service';
 import { CreatePersonaDto } from './dto/create-persona.dto';
 import { UpdatePersonaDto } from './dto/update-persona.dto';
+import { query } from 'express';
 
 @Controller('persona')
 export class PersonaController {
@@ -13,8 +14,8 @@ export class PersonaController {
   }
 
   @Get()
-  findAll() {
-    return this.personaService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.personaService.findAll(page,limit);
   }
 
   @Get(':id')

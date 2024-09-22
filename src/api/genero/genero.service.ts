@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
+import { Genero } from './entities/genero.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class GeneroService {
+  constructor(
+    @InjectRepository(Genero)
+    private repository: Repository<Genero>,
+  ) {
+
+  }
   create(createGeneroDto: CreateGeneroDto) {
-    return 'This action adds a new genero';
+    return this.repository.save(createGeneroDto);
   }
 
-  findAll() {
-    return `This action returns all genero`;
+  findAll(page: number = 1, limit: number = 10): Promise<[Genero[], number]> {
+    return this.repository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit
+  
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} genero`;
+    return this.repository.findOne({where: {id: id},
+    relations:['libros']})
   }
 
   update(id: number, updateGeneroDto: UpdateGeneroDto) {
-    return `This action updates a #${id} genero`;
+    return this.repository.update(id,updateGeneroDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} genero`;
+    return this.repository.delete(id)
   }
 }

@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-
+import { Usuario } from './entities/usuario.entity';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsuarioService {
-  create(createUsuarioDto: CreateUsuarioDto) {
-    return 'This action adds a new usuario';
+  constructor(
+    @InjectRepository(Usuario)
+    private repository: Repository<Usuario>,
+  ) {
+
+  }
+  async create(createUsuarioDto: CreateUsuarioDto) {
+    const usuario = this.repository.create(createUsuarioDto);
+    const saltRounds = 10;  // Número de rondas para generar la "sal"
+    usuario.password = await bcrypt.hash(createUsuarioDto.password, saltRounds);
+    return await this.repository.save(usuario);
+
+
   }
 
-  findAll() {
-    return `This action returns all usuario`;
+  findAll(page: number = 1, limit: number = 10): Promise<[Usuario[], number]> {
+    return this.repository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      relations:['nivel']
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  findOne(id: number): Promise<Usuario> {
+    return this.repository.findOne({
+      where: { id },
+      relations: ['persona','nivel'],
+    });
+  }
+  update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<UpdateResult> {
+    return this.repository.update(id, updateUsuarioDto);
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  remove(id: number): Promise<DeleteResult> {
+    return this.repository.delete(id);
   }
 }
