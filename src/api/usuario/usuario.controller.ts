@@ -2,13 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Usuario } from './entities/usuario.entity';
+import { CreateLibroDto } from '../libros/dto/create-libro.dto';
+import { UpdateResult } from 'typeorm';
+@ApiTags('usuario')
 @Controller('usuario')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
-
+ 
+ 
   @Post()
-  create(@Body() createUsuarioDto: CreateUsuarioDto) {
+  create(@Body() createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     return this.usuarioService.create(createUsuarioDto);
   }
 
@@ -23,7 +28,7 @@ export class UsuarioController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto):Promise<UpdateResult>  {
     return this.usuarioService.update(+id, updateUsuarioDto);
   }
 

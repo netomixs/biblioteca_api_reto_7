@@ -1,13 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { NivelUsuarioService } from './nivel-usuario.service';
-import { CreateNivelUsuarioDto } from './dto/create-nivel-usuario.dto';
-import { UpdateNivelUsuarioDto } from './dto/update-nivel-usuario.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('nivel-usuario')
 @Controller('nivel-usuario')
 export class NivelUsuarioController {
   constructor(private readonly nivelUsuarioService: NivelUsuarioService) {}
-
-  
 
   @Get()
   findAll() {
@@ -19,9 +17,5 @@ export class NivelUsuarioController {
     return this.nivelUsuarioService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNivelUsuarioDto: UpdateNivelUsuarioDto) {
-    return this.nivelUsuarioService.update(+id, updateNivelUsuarioDto);
-  }
  
 }
