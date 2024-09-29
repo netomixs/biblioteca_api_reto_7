@@ -1,21 +1,35 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from '../auth.service';
 
 @Injectable()
-export class RestriccionDiaGuard implements CanActivate {
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const now = new Date();
-    const startHour = 9; // 9:00 AM
-    const endHour = 24;  // 5:00 PM
+@Injectable()
+export class JwtAuthGuard implements CanActivate {
+  constructor(
+    private readonly authService: AuthService, // Inyecta tu AuthService para usar validateToken
+ 
+  ) {}
 
-    const currentHour = now.getHours();
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const authHeader = request.headers['authorization'];
 
-    if (currentHour >= startHour && currentHour < endHour) {
-      return true;
-    } else {
-      throw new ForbiddenException('Solo es posible acceder entre 9:00 AM and 5:00 PM');
+    if (!authHeader) {
+      throw new UnauthorizedException('No se encontró el encabezado de autorización');
     }
+
+    const token = authHeader.split(' ')[1];  
+    if (!token) {
+      throw new UnauthorizedException('Token no proporcionado');
+    }
+
+    const decoded = await this.authService.validateToken(token);   token
+    if (!decoded) {
+      throw new UnauthorizedException('Token no válido o expirado');
+    }
+
+    request.user = decoded;  
+    return true;
   }
 }

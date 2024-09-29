@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { GeneroService } from './genero.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateEditorialDto } from '../editorial/dto/update-editorial.dto';
 import { Genero } from './entities/genero.entity';
-
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
+@UseGuards(JwtAuthGuard)
 @ApiTags('genero')
 @Controller('genero')
 export class GeneroController {

@@ -21,14 +21,14 @@ export class LibrosService {
     return this.repository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
-      relations: ['editorial', 'autor', 'autores.persona', 'generos']
+      relations: ['editorial', 'autores', 'autores.persona', 'generos']
     });
   }
 
   findOne(id: number) {
     return this.repository.findOne({
       where: { Id: id },
-      relations: ['editorial', 'autor', 'autores.persona', 'generos', 'prestamos']
+      relations: ['editorial', 'autores', 'autores.persona', 'generos', 'prestamos']
     });
   }
 

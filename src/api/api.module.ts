@@ -21,7 +21,6 @@ import { NivelUsuario } from './nivel-usuario/entities/nivel-usuario.entity';
 import { Prestamo } from './prestamo/entities/prestamo.entity';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RestriccionDiaGuard } from './auth/guard/auth.guard';
 import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -52,7 +51,7 @@ import { ConfigService } from '@nestjs/config';
     NivelUsuarioModule,
     PrestamoModule,
     UsuarioModule,
-    AuthModule],
+    AuthModule,],
   controllers: [ApiController],
   providers: [ApiService],
 

@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { EditorialService } from './editorial.service';
 import { CreateEditorialDto } from './dto/create-editorial.dto';
 import { UpdateEditorialDto } from './dto/update-editorial.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Editorial } from './entities/editorial.entity';
 import { DeleteResult } from 'typeorm';
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
 @ApiTags('editorial')
 @Controller('editorial')
+@UseGuards(JwtAuthGuard)
 export class EditorialController {
   constructor(private readonly editorialService: EditorialService) {}
   @ApiOperation({ summary: 'Crear una nueva editorial' })  

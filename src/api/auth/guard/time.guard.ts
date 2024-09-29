@@ -8,7 +8,7 @@ export class RestriccionDiaGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const now = new Date();
     const startHour = 9;  
-    const endHour = 19;   
+    const endHour = 23;   
 
     const currentHour = now.getHours();
 

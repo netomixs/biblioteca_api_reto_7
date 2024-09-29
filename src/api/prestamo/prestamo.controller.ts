@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { PrestamoService } from './prestamo.service';
 import { CreatePrestamoDto } from './dto/create-prestamo.dto';
 import { UpdatePrestamoDto } from './dto/update-prestamo.dto';
@@ -6,8 +6,10 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateLibroDto } from '../libros/dto/create-libro.dto';
 import { Prestamo } from './entities/prestamo.entity';
 import { UpdateResult } from 'typeorm';
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
 @ApiTags('prestamo')
 @Controller('prestamo')
+@UseGuards(JwtAuthGuard)
 export class PrestamoController {
   constructor(private readonly prestamoService: PrestamoService) {}
   @ApiOperation({ summary: 'Insertar un prestamo' })

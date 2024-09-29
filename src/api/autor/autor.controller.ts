@@ -2,13 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } f
 import { AutorService } from './autor.service';
 import { CreateAutorDto } from './dto/create-autor.dto';
 import { UpdateAutorDto } from './dto/update-autor.dto';
-import { RestriccionDiaGuard } from '../auth/guard/auth.guard';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateLibroDto } from '../libros/dto/create-libro.dto';
 import { Autor } from './entities/autor.entity';
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
 
 @ApiTags('autor')
 @Controller('autor')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class AutorController {
   constructor(private readonly autorService: AutorService) { }
 

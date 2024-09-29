@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { LibrosService } from './libros.service';
 import { CreateLibroDto } from './dto/create-libro.dto';
 import { UpdateLibroDto } from './dto/update-libro.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Libro } from './entities/libro.entity';
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
 @ApiTags('libro')
 @Controller('libros')
+@UseGuards(JwtAuthGuard)
 export class LibrosController {
   constructor(private readonly librosService: LibrosService) { }
   @ApiOperation({ summary: 'Insertar un libro' })

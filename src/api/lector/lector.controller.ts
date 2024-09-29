@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { LectorService } from './lector.service';
 import { CreateLectorDto } from './dto/create-lector.dto';
 import { UpdateLectorDto } from './dto/update-lector.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Lector } from './entities/lector.entity';
+import { JwtAuthGuard } from '../auth/guard/auth.guard';
 @ApiTags('lector')
 @Controller('lector')
+@UseGuards(JwtAuthGuard)
 export class LectorController {
   constructor(private readonly lectorService: LectorService) { }
   @ApiOperation({ summary: 'Insertar nuevo lector ' })  
