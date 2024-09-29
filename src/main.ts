@@ -26,6 +26,13 @@ async function bootstrap() {
       },
       'JWT-auth')
     .build();
+    app.enableCors({
+      origin: true,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      allowedHeaders: "Content-Type,Authorization,X-Requested-With,Accept-Language",
+      optionsSuccessStatus: 204,
+      credentials: true,
+    });
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
