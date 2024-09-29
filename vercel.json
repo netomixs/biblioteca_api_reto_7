@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm start",
+    "buildCommand": "nest build",
     "installCommand": "npm install",
     "builds": [
       {
@@ -17,7 +17,7 @@
           "Access-Control-Allow-Headers": "Content-Type,Authorization,X-Requested-With,Accept-Language",
           "Access-Control-Allow-Credentials": "true"
         },
-        "dest": "src/main.ts",
+        "dest": "dist/main.ts",
         "methods": ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"]
       }
     ]
