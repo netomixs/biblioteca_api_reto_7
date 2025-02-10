@@ -22,6 +22,8 @@ import { Prestamo } from './prestamo/entities/prestamo.entity';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
+import { Deseo } from 'src/deseo/entities/deseo.entity';
+import { DeseoModule } from 'src/deseo/deseo.module';
 @Module({
   imports: [TypeOrmModule.forRoot({
  
@@ -31,27 +33,11 @@ import { ConfigService } from '@nestjs/config';
     username: '358147',
     password: 'POKEMONDIAMANTEYPERLA',
     database: 'biblioteca-api_dnao',
-    entities: [Libro,
-      Autor,
-      Persona,
-      Editorial,
-      Genero,
-      Lector,
-      NivelUsuario,
-      Prestamo,
-      Usuario],
+    entities: [
+Deseo],
     synchronize: true,
   }),
-    LibrosModule,
-    AutorModule,
-    PersonaModule,
-    EditorialModule,
-    GeneroModule,
-    LectorModule,
-    NivelUsuarioModule,
-    PrestamoModule,
-    UsuarioModule,
-    AuthModule,],
+ DeseoModule],
   controllers: [ApiController],
   providers: [ApiService],
 

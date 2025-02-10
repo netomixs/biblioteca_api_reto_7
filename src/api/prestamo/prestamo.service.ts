@@ -19,7 +19,7 @@ export class PrestamoService {
     return this.repository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
-      relations: ['libro', 'lector', 'usuario']
+      relations: ['libro', 'lector', 'usuarios']
     });
 
   }
@@ -27,7 +27,7 @@ export class PrestamoService {
   findOne(id: number) {
     return this.repository.findOne({
       where: { id: id }, relations:
-        ['libro','lector','lector.persona','usuario','usuario.persona']
+        ['libro','lector','lector.persona','usuarios','usuario.persona']
     });
   }
 
